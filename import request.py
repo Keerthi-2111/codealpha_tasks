@@ -2,12 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-# Empty lists to store data
+
 titles = []
 prices = []
 ratings = []
 
-# Loop through 3 pages of the website (you can increase if you want)
+
 for page in range(1, 4):
     url = f"https://books.toscrape.com/catalogue/page-{page}.html"
     res = requests.get(url)
@@ -20,15 +20,15 @@ for page in range(1, 4):
         title = book.h3.a['title']
         titles.append(title)
         
-        # Price
+        
         price = book.find('p', class_='price_color').text
         prices.append(price)
         
-        # Rating
+        
         rating = book.p['class'][1]  # example: "One", "Two", "Three"
         ratings.append(rating)
 
-# Store in DataFrame
+
 df = pd.DataFrame({
     'Title': titles,
     'Price': prices,
@@ -40,3 +40,4 @@ df.to_csv('books_dataset.csv', index=False, encoding='utf-8')
 
 print("✅ Dataset created successfully: books_dataset.csv")
 print(df.head())
+
